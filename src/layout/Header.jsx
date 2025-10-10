@@ -29,7 +29,7 @@ const Header = ({showSidebar, setShowSidebar}) => {
               </div>
 
               {
-                userInfo.role === 'admin' ? <img className='w-[45px] h-[45px] rounded-full overflow-hidden' src="http://localhost:3001/images/admin.jpg" alt="" />  : <img className='w-[45px] h-[45px] rounded-full overflow-hidden' src={userInfo.profileImage} alt="" />
+                userInfo.role === 'admin' ? <img className='w-[45px] h-[45px] rounded-full overflow-cover' src="http://localhost:3001/images/admin.jpg" alt="" />  : <img className='w-[45px] h-[45px] rounded-full overflow-hidden' src={userInfo.image} alt="" />
               }
               
 
