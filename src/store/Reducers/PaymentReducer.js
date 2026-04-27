@@ -109,7 +109,6 @@ export const PaymentReducer = createSlice({
             state.availableAmount = state.availableAmount - payload.withdrowal.amount; 
             state.pendingAmount = payload.withdrowal.amount; 
         })
-
         .addCase(get_payment_request.fulfilled, (state, { payload }) => {
             state.pendingWithdrows = payload.withdrowalRequest  
         })
@@ -122,10 +121,16 @@ export const PaymentReducer = createSlice({
             state.errorMessage = payload.message; 
         })
         .addCase(confirm_payment_request.fulfilled, (state, { payload }) => {
-            const temp = state.pendingWithdrows.filter(r => r._id !== payload.payment._id)
+          
             state.loader = false  
             state.successMessage = payload.message;
-            state.pendingWithdrows = temp  
+                state.pendingWithdrows = state.pendingWithdrows.filter(
+        r => r._id !== payload.payment._id
+    );
+            state.successWithdrows = [
+        payload.payment,
+        ...state.successWithdrows
+    ]; 
         })
        
 

@@ -8,11 +8,10 @@ export const admin_login = createAsyncThunk(
          console.log(info)
         try {
             const {data} = await api.post('/admin-login',info,{withCredentials: true})
-            localStorage.setItem('adminToken',data.token)
-            // console.log(data)
+             console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
+             console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -26,11 +25,12 @@ export const seller_login = createAsyncThunk(
         try {
             const {data} = await api.post('/seller-login',info,{withCredentials: true})
             console.log(data)
-            localStorage.setItem('sellerToken',data.token) 
             return fulfillWithValue(data)
         } catch (error) {
             // console.log(error.response.data)
-            return rejectWithValue(error.response.data)
+            return rejectWithValue(
+                error.response?.data || {error:"server not responding"}
+            )
         }
     }
 )
@@ -41,7 +41,7 @@ export const get_user_info = createAsyncThunk(
           
         try {
             const {data} = await api.get('/get-user',{withCredentials: true})
-            // console.log(data)            
+             console.log(data)            
             return fulfillWithValue(data)
         } catch (error) {
             // console.log(error.response.data)
@@ -65,7 +65,6 @@ export const profile_image_upload = createAsyncThunk(
         }
     }
 )
-// end method 
 
 export const seller_register = createAsyncThunk(
     'auth/seller_register',
@@ -73,7 +72,6 @@ export const seller_register = createAsyncThunk(
         try {
             console.log(info)
             const {data} = await api.post('/seller-register',info,{withCredentials: true})
-            localStorage.setItem('sellerToken',data.token)
             //  console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
@@ -126,29 +124,13 @@ const returnUserInfo = () => {
   return null;
 };
 
- const returnRole = () => {
-   const path = window.location.pathname; // বর্তমান URL path দেখবে
-  let token = "";
+const returnRole = () => {
+  const sellerToken = localStorage.getItem("sellerToken");
+  const adminToken = localStorage.getItem("adminToken");
 
-  if (path.startsWith("/admin")) {
-    token = localStorage.getItem("adminToken");
-  } else {
-    token = localStorage.getItem("sellerToken");
-  }
+  if (adminToken) return "admin";
+  if (sellerToken) return "seller";
 
-
-  if (token) {
-    const decoded = jwtDecode(token);
-    const expireTime = new Date(decoded.exp * 1000);
-
-    if (new Date() > expireTime) {
-      localStorage.removeItem("sellerToken");
-      localStorage.removeItem("adminToken");
-      return "";
-    } else {
-      return decoded.role; // "admin" or "seller"
-    }
-  }
   return "";
 };
 
@@ -161,14 +143,6 @@ const returnUserInfo = () => {
              
             try {
                 const {data} = await api.get('/logout', {withCredentials: true}) 
-               if (role === "admin") {
-        localStorage.removeItem("adminToken");
-        navigate("/admin/login");
-               }
-               else if (role === "seller") {
-            localStorage.removeItem("sellerToken");
-             navigate("/login");
-                }
                 
                 return fulfillWithValue(data)
             } catch (error) {
@@ -188,8 +162,8 @@ export const authReducer = createSlice({
         errorMessage : '',
         loader: false,
         userInfo :returnUserInfo(),
-       adminToken: localStorage.getItem('adminToken'),
-  sellerToken: localStorage.getItem('sellerToken'),
+       adminToken: null,
+  sellerToken: null,
   role: returnRole(),
     },
     reducers : {
@@ -222,13 +196,15 @@ export const authReducer = createSlice({
         }) 
         .addCase(seller_login.rejected, (state, { payload }) => {
             state.loader = false;
-            state.errorMessage = payload.error
+            state.errorMessage = payload?.error || payload?.message || "Login failed";
         }) 
         .addCase(seller_login.fulfilled, (state, { payload }) => {
-            state.loader = false;
+           state.loader = false;
             state.successMessage = payload.message
             state.sellerToken = payload.token
-            state.role = returnRole()
+            const decoded = jwtDecode(payload.token)
+            console.log("payload",payload)
+            state.role = decoded.role
             state.userInfo=payload.userInfo
         })
 
@@ -257,6 +233,7 @@ export const authReducer = createSlice({
         .addCase(profile_image_upload.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.userInfo = payload.userInfo
+            console.log("userInfo",payload.userInfo)
             state.successMessage = payload.message
         })
 
@@ -265,14 +242,14 @@ export const authReducer = createSlice({
         })
         .addCase(profile_info_add.fulfilled, (state, { payload }) => {
             state.loader = false;
-            state.userInfo = payload.userInfo
+          state.userInfo = {
+  ...state.userInfo,
+  ...payload.userInfo
+}
             state.successMessage = payload.message
         })
               .addCase(logout.fulfilled, (state) => {
         state.userInfo = "";
-        state.role = "";
-        state.adminToken = null;
-        state.sellerToken = null;
         state.successMessage = "Logged out successfully";
       });
 

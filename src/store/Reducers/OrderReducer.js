@@ -15,8 +15,7 @@ export const get_admin_orders = createAsyncThunk(
     }
 )
 
-  // End Method  
- 
+
   export const get_admin_order = createAsyncThunk(
     'orders/get_admin_order',
     async( orderId ,{rejectWithValue, fulfillWithValue}) => { 
@@ -125,17 +124,17 @@ export const OrderReducer = createSlice({
         .addCase(get_seller_order.fulfilled, (state, { payload }) => {
             state.order = payload.order; 
         })
-
         .addCase(seller_order_status_update.rejected, (state, { payload }) => {
             state.errorMessage = payload.message; 
         })
-        .addCase(seller_order_status_update.fulfilled, (state, { payload }) => {
+            .addCase(seller_order_status_update.fulfilled, (state, { payload }) => {
+            console.log("payload",payload)
             state.successMessage = payload.message; 
+            state.myOrders = state.myOrders.map(order =>
+    order._id === payload.order._id ? payload.order : order
+)
         })
- 
-
     }
-
 })
 export const {messageClear} = OrderReducer.actions
 export default OrderReducer.reducer
