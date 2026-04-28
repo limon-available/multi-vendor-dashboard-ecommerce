@@ -3,17 +3,13 @@ import { MdCurrencyExchange, MdProductionQuantityLimits } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import Chart from "react-apexcharts";
-import io from "socket.io-client";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { get_seller_dashboard_data } from "../../store/Reducers/dashboardReducer";
 import moment from "moment";
 import customer from "../../assets/demo.jpg";
+import socket from "../../utils/socket";
 
-const socket = io("http://localhost:5000", {
-  // অথবা তোমার production backend URL
-  withCredentials: true,
-});
 const SellerDashboard = () => {
   const dispatch = useDispatch();
   const {
@@ -38,14 +34,12 @@ const SellerDashboard = () => {
         role: userInfo.role,
       });
 
-      // cleanup only on unmount, not immediately
       return () => {
         console.log("❌ Disconnecting seller socket...");
         socket.off("add_seller");
-        socket.disconnect();
       };
     }
-  }, [userInfo?.id]);
+  }, [userInfo]);
 
   useEffect(() => {
     dispatch(get_seller_dashboard_data());
@@ -78,7 +72,7 @@ const SellerDashboard = () => {
       dataLabels: {
         enabled: false,
       },
-      strock: {
+      stroke: {
         show: true,
         curve: ["smooth", "straight", "stepline"],
         lineCap: "butt",
@@ -144,8 +138,8 @@ const SellerDashboard = () => {
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-7">
         <div className="flex justify-between items-center p-5 bg-[#fae8e8] rounded-md gap-3">
           <div className="flex flex-col justify-start items-start text-[#5c5a5a]">
-            <h2 className="text-3xl font-bold">${totalSale}</h2>
-            <span className="text-md font-medium">Total Salse</span>
+            <h2 className="text-3xl font-bold">${totalSale?.toFixed(2)}</h2>
+            <span className="text-md font-medium">Total Sales</span>
           </div>
 
           <div className="w-[40px] h-[47px] rounded-full bg-[#fa0305] flex justify-center items-center text-xl">
@@ -213,7 +207,7 @@ const SellerDashboard = () => {
             <div className="flex flex-col gap-2 pt-6 text-[#d0d2d6]">
               <ol className="relative border-1 border-slate-600 ml-4">
                 {recentMessage.map((m, i) => (
-                  <li className="mb-3 ml-6">
+                  <li key={i} className="mb-3 ml-6">
                     <div className="flex absolute -left-5 shadow-lg justify-center items-center w-10 h-10 p-[6px] bg-[#4c7fe2] rounded-full z-10">
                       {m.senderId !== userInfo.id ? (
                         <img
