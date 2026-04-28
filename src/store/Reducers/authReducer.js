@@ -1,7 +1,5 @@
  import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api/api";
-import { jwtDecode } from "jwt-decode";
-
 export const admin_login = createAsyncThunk(
     'auth/admin_login',
     async(info,{rejectWithValue, fulfillWithValue}) => {
@@ -96,7 +94,7 @@ export const profile_info_add = createAsyncThunk(
     }
 )
 // end method 
-const returnUserInfo = () => {
+/*const returnUserInfo = () => {
   const path = window.location.pathname;
   let token = "";
 
@@ -133,7 +131,7 @@ const returnRole = () => {
 
   return "";
 };
-
+*/
 
     // end Method 
 
@@ -161,10 +159,9 @@ export const authReducer = createSlice({
         successMessage :  '',
         errorMessage : '',
         loader: false,
-        userInfo :returnUserInfo(),
-       adminToken: null,
-  sellerToken: null,
-  role: returnRole(),
+        userInfo: null,
+        role:''
+
     },
     reducers : {
 
@@ -186,9 +183,9 @@ export const authReducer = createSlice({
         .addCase(admin_login.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.successMessage = payload.message
-            state.adminToken= payload.token
-            state.role = returnRole()
+            
             state.userInfo = payload.userInfo;
+            state.role=payload.userInfo.role
         })
 
         .addCase(seller_login.pending, (state, { payload }) => {
@@ -201,10 +198,7 @@ export const authReducer = createSlice({
         .addCase(seller_login.fulfilled, (state, { payload }) => {
            state.loader = false;
             state.successMessage = payload.message
-            state.sellerToken = payload.token
-            const decoded = jwtDecode(payload.token)
-            console.log("payload",payload)
-            state.role = decoded.role
+            state.role = payload.userInfo.role
             state.userInfo=payload.userInfo
         })
 
@@ -218,15 +212,18 @@ export const authReducer = createSlice({
         .addCase(seller_register.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.successMessage = payload.message
-            state.sellerToken = payload.token
-            state.role = returnRole()
+
         })
 
         .addCase(get_user_info.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.userInfo = payload.userInfo;
+            state.role=payload.userInfo.role
         })
-
+         .addCase(get_user_info.rejected, (state) => {
+  state.userInfo = null;
+  state.role = '';
+})
         .addCase(profile_image_upload.pending, (state, { payload }) => {
             state.loader = true; 
         })
@@ -249,7 +246,8 @@ export const authReducer = createSlice({
             state.successMessage = payload.message
         })
               .addCase(logout.fulfilled, (state) => {
-        state.userInfo = "";
+                  state.userInfo = null;
+                  state.role = '';
         state.successMessage = "Logged out successfully";
       });
 
