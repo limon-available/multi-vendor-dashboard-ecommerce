@@ -214,7 +214,9 @@ export const authReducer = createSlice({
             state.successMessage = payload.message
 
         })
-
+        .addCase(get_user_info.pending, (state) => {
+  state.loader = true;
+})
         .addCase(get_user_info.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.userInfo = payload.userInfo;
