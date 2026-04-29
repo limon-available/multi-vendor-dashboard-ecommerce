@@ -18,10 +18,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (sellerToken || adminToken) {
-      dispatch(get_user_info());
-    }
-  }, [adminToken, sellerToken]);
+    dispatch(get_user_info());
+  }, [dispatch]);
 
   return <Router allRoutes={allRoutes} />;
 }

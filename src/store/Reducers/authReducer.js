@@ -158,7 +158,7 @@ export const authReducer = createSlice({
     initialState:{
         successMessage :  '',
         errorMessage : '',
-        loader: false,
+        loader:true,
         userInfo: null,
         role:''
 
