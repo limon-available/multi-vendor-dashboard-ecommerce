@@ -250,6 +250,7 @@ export const authReducer = createSlice({
               .addCase(logout.fulfilled, (state) => {
                   state.userInfo = null;
                   state.role = '';
+                  state.loader = false;
         state.successMessage = "Logged out successfully";
       });
 
