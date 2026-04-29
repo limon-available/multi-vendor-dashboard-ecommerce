@@ -6,13 +6,17 @@ import { PropagateLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { overrideStyle } from "../../utils/utils";
-import { seller_login, messageClear } from "../../store/Reducers/authReducer";
+import {
+  seller_login,
+  messageClear,
+  get_user_info,
+} from "../../store/Reducers/authReducer";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { loader, errorMessage, successMessage } = useSelector(
+  const { loader, errorMessage, successMessage, userInfo } = useSelector(
     (state) => state.auth,
   );
 
@@ -36,11 +40,18 @@ const Login = () => {
   useEffect(() => {
     if (successMessage) {
       toast.success(successMessage);
+
+      dispatch(get_user_info());
+
       dispatch(messageClear());
+    }
+  }, [successMessage, dispatch]);
+
+  useEffect(() => {
+    if (userInfo) {
       navigate("/seller/dashboard");
     }
-  }, [successMessage]);
-
+  }, [userInfo, navigate]);
   useEffect(() => {
     if (errorMessage) {
       toast.error(errorMessage);
