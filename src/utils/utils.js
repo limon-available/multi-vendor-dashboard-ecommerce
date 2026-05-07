@@ -6,4 +6,4 @@ export const overrideStyle = {
     justifyContent : 'center',
     alignItems : 'center'
 }
-export const socket = io('https://backend-multi-vendor-ecommerce-xa4b.onrender.com')
+export const socket = io('https://multi-vendor-eccomerce-backend-1.onrender.com/')
