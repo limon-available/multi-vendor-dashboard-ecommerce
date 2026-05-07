@@ -26,7 +26,6 @@ const SellerDashboard = () => {
       const sellerId = userInfo.id;
       console.log("🧩 Registering seller on socket:", userInfo);
 
-      // ✅ emit only once when sellerId changes
       socket.emit("add_seller", sellerId, {
         id: sellerId,
         name: userInfo.name,

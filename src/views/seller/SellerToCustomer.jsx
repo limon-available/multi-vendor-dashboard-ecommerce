@@ -19,15 +19,23 @@ const SellerToCustomer = () => {
   const [text, setText] = useState("");
   const [receverMessage, setReceverMessage] = useState("");
 
+  const [activeCustomer, setActiveCustomer] = useState([]);
+
   const { userInfo } = useSelector((state) => state.auth);
   const { customers, messages, currentCustomer, successMessage } = useSelector(
     (state) => state.chat,
   );
   console.log("user info", userInfo);
   const sellerId = userInfo?._id || userInfo?.id;
-  console.log("sellerId", sellerId);
+  useEffect(() => {
+    socket.on("activeCustomer", (customers) => {
+      setActiveCustomer(customers);
+    });
+  }, []);
 
-  console.log("customer", customers);
+  const isOnline = (customerId) => {
+    return activeCustomer.some((c) => c.customerId === customerId);
+  };
 
   const { customerId } = useParams();
   console.log("customer id", customerId);
@@ -124,7 +132,10 @@ const SellerToCustomer = () => {
                       src="http://localhost:3001/images/admin.jpg"
                       alt=""
                     />
-                    <div className="w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0"></div>
+
+                    <div
+                      className={`w-[10px] h-[10px] ${isOnline(c.fdId) ? "bg-green-500" : "bg-red-500"} rounded-full absolute right-0 bottom-0`}
+                    ></div>
                   </div>
                   <div className="flex justify-center items-start flex-col w-full">
                     <div className="flex justify-between items-center w-full">
@@ -147,7 +158,9 @@ const SellerToCustomer = () => {
                       src="http://localhost:3001/images/demo.jpg"
                       alt=""
                     />
-                    <div className="w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0"></div>
+                    <div
+                      className={`w-[10px] h-[10px] ${isOnline(currentCustomer?.fdId) ? "bg-green-500" : "bg-red-500"} rounded-full absolute right-0 bottom-0`}
+                    ></div>
                   </div>
                   <h2 className="text-base text-white font-semibold">
                     {currentCustomer?.name || "Select Customer"}

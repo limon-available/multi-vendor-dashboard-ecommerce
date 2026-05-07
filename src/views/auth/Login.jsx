@@ -20,6 +20,7 @@ const Login = () => {
     (state) => state.auth,
   );
 
+  console.log("loader", loader);
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -34,6 +35,7 @@ const Login = () => {
 
   const submit = (e) => {
     e.preventDefault();
+    console.log("submit button working");
     dispatch(seller_login(state));
   };
 
@@ -98,13 +100,14 @@ const Login = () => {
             </div>
 
             <button
+              type="submit"
               disabled={loader ? true : false}
               className="bg-slate-800 w-full hover:shadow-blue-300/ hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
             >
               {loader ? (
                 <PropagateLoader color="#fff" cssOverride={overrideStyle} />
               ) : (
-                "Sing In"
+                "Sign In"
               )}
             </button>
 
@@ -112,7 +115,7 @@ const Login = () => {
               <p>
                 Don't Have an account ?{" "}
                 <Link className="font-bold" to="/register">
-                  Sing Up
+                  Sign Up
                 </Link>{" "}
               </p>
             </div>

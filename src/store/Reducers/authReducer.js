@@ -158,7 +158,7 @@ export const authReducer = createSlice({
     initialState:{
         successMessage :  '',
         errorMessage : '',
-        loader:true,
+        loader:false,
         userInfo: null,
         role:''
 
@@ -215,7 +215,7 @@ export const authReducer = createSlice({
 
         })
         .addCase(get_user_info.pending, (state) => {
-  state.loader = true;
+           state.loader =true;
 })
         .addCase(get_user_info.fulfilled, (state, { payload }) => {
             state.loader = false;
@@ -224,7 +224,9 @@ export const authReducer = createSlice({
         })
          .addCase(get_user_info.rejected, (state) => {
   state.userInfo = null;
-  state.role = '';
+             state.role = '';
+             state.loader = false;
+             
 })
         .addCase(profile_image_upload.pending, (state, { payload }) => {
             state.loader = true; 
@@ -247,12 +249,19 @@ export const authReducer = createSlice({
 }
             state.successMessage = payload.message
         })
-              .addCase(logout.fulfilled, (state) => {
-                  state.userInfo = null;
-                  state.role = '';
-                  state.loader = false;
-        state.successMessage = "Logged out successfully";
-      });
+.addCase(logout.pending, (state) => {
+    state.loader = true;
+})
+.addCase(logout.rejected, (state, { payload }) => {
+    state.loader = false;
+    state.errorMessage = payload?.error || "Logout failed";
+})
+.addCase(logout.fulfilled, (state) => {
+    state.loader = false;
+    state.userInfo = null;
+    state.role = '';
+    state.successMessage = "Logged out successfully";
+})
 
     }
 
