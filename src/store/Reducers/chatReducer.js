@@ -6,8 +6,7 @@ export const get_customers = createAsyncThunk(
     async(sellerId,{rejectWithValue, fulfillWithValue}) => {
         
         try {
-            const {data} = await api.get(`/chat/seller/get-customers/${sellerId}` ,{withCredentials: true}) 
-             console.log("data",data)
+            const {data} = await api.get(`/chat/seller/get-customers/${sellerId}` ,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) { 
             return rejectWithValue(error.response.data)
@@ -20,8 +19,7 @@ export const get_customer_message = createAsyncThunk(
     async(customerId,{rejectWithValue, fulfillWithValue}) => {
         
         try {
-            const {data} = await api.get(`/chat/seller/get-customer-message/${customerId}` ,{withCredentials: true}) 
-            // console.log(data)
+            const {data} = await api.get(`/chat/seller/get-customer-message/${customerId}` ,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) { 
             return rejectWithValue(error.response.data)
@@ -35,8 +33,7 @@ export const send_message = createAsyncThunk(
     async(info,{rejectWithValue, fulfillWithValue}) => {
         
         try {
-            const {data} = await api.post(`/chat/seller/send-message-to-customer`,info ,{withCredentials: true}) 
-            // console.log(data)
+            const {data} = await api.post(`/chat/seller/send-message-to-customer`,info ,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) { 
             return rejectWithValue(error.response.data)
@@ -50,8 +47,7 @@ export const get_sellers = createAsyncThunk(
     async(_,{rejectWithValue, fulfillWithValue}) => {
         
         try {
-            const {data} = await api.get(`/chat/admin/get-sellers` ,{withCredentials: true}) 
-            // console.log(data)
+            const {data} = await api.get(`/chat/admin/get-sellers` ,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) { 
             return rejectWithValue(error.response.data)
@@ -66,8 +62,7 @@ export const send_message_seller_admin = createAsyncThunk(
     async(info,{rejectWithValue, fulfillWithValue}) => {
         
         try {
-            const {data} = await api.post(`/chat/message-send-seller-admin`, info, {withCredentials: true}) 
-            // console.log(data)
+            const {data} = await api.post(`/chat/message-send-seller-admin`, info, {withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) { 
             return rejectWithValue(error.response.data)
@@ -82,8 +77,7 @@ export const get_admin_message = createAsyncThunk(
     async(receverId,{rejectWithValue, fulfillWithValue}) => {
         
         try {
-            const {data} = await api.get(`/chat/get-admin-messages/${receverId}`, {withCredentials: true}) 
-            // console.log(data)
+            const {data} = await api.get(`/chat/get-admin-messages/${receverId}`, {withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) { 
             return rejectWithValue(error.response.data)
@@ -98,8 +92,7 @@ export const get_seller_message = createAsyncThunk(
     async(receverId,{rejectWithValue, fulfillWithValue}) => {
         
         try {
-            const {data} = await api.get(`/chat/get-seller-messages`, {withCredentials: true}) 
-            // console.log(data)
+            const {data} = await api.get(`/chat/get-seller-messages`, {withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) { 
             return rejectWithValue(error.response.data)

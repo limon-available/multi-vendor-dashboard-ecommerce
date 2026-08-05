@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Pagination from "../Pagination";
 import { useDispatch } from "react-redux";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import StatusPill from "../components/StatusPill";
 import {
   get_seller_order,
   get_seller_orders,
@@ -16,8 +17,6 @@ const Orders = () => {
   const [parPage, setParPage] = useState(5);
   const { myOrders } = useSelector((state) => state.order);
   const userInfo = useSelector((state) => state.auth);
-  console.log("userInfo", userInfo);
-  console.log("orders", myOrders);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!userInfo?.userInfo?._id) return;
@@ -32,9 +31,9 @@ const Orders = () => {
   }, [currentPage, searchValue, parPage, userInfo]);
   return (
     <div className="px-2 lg:px-7 pt-5">
-      <h1 className="text-[#000000] font-semibold text-lg mb-3">Orders</h1>
+      <h1 className="text-slate-800 font-bold text-xl font-display mb-3">Orders</h1>
 
-      <div className="w-full p-4 bg-[#6a5fdf] rounded-md">
+      <div className="w-full p-5 bg-[#6a5fdf] rounded-xl shadow-soft">
         <Search
           setParPage={setParPage}
           setSearchValue={setSearchValue}
@@ -65,14 +64,21 @@ const Orders = () => {
 
             <tbody>
               {myOrders.map((d, i) => (
-                <tr key={i}>
-                  <td>#{d._id}</td>
-                  <td>${d.price}</td>
-                  <td>{d.payment_status}</td>
-                  <td>{d.delivery_status}</td>
+                <tr key={i} className="border-b border-slate-600/40 hover:bg-white/5 transition-colors">
+                  <td className="py-3 px-4 font-medium whitespace-nowrap">#{d._id}</td>
+                  <td className="py-3 px-4 font-semibold whitespace-nowrap">${d.price}</td>
+                  <td className="py-3 px-4 whitespace-nowrap">
+                    <StatusPill status={d.payment_status} />
+                  </td>
+                  <td className="py-3 px-4 whitespace-nowrap">
+                    <StatusPill status={d.delivery_status} />
+                  </td>
 
-                  <td>
-                    <Link to={`/seller/dashboard/order/details/${d._id}`}>
+                  <td className="py-3 px-4 whitespace-nowrap">
+                    <Link
+                      to={`/seller/dashboard/order/details/${d._id}`}
+                      className="inline-flex w-9 h-9 items-center justify-center rounded-lg bg-white/10 text-white hover:bg-white/20 transition-all"
+                    >
                       <FaEye />
                     </Link>
                   </td>

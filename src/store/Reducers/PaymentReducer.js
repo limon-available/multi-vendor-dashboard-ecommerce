@@ -4,12 +4,10 @@ import api from "../../api/api";
 export const get_seller_payment_details = createAsyncThunk(
     'payment/get_seller_payment_details',
     async( sellerId,{rejectWithValue, fulfillWithValue}) => { 
-        try { 
-            console.log("🚀 API called with sellerId:", sellerId);
-            const {data} = await api.get(`/payment/seller-payment-details/${sellerId} `,{withCredentials: true})  
+        try {
+            const {data} = await api.get(`/payment/seller-payment-details/${sellerId} `,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -21,10 +19,9 @@ export const send_withdrowal_request = createAsyncThunk(
     'payment/send_withdrowal_request',
     async( info,{rejectWithValue, fulfillWithValue}) => { 
         try { 
-            const {data} = await api.post(`/payment/withdrowal-request`,info,{withCredentials: true})  
+            const {data} = await api.post(`/payment/withdrowal-request`,info,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -35,10 +32,9 @@ export const send_withdrowal_request = createAsyncThunk(
     'payment/get_payment_request',
     async(_,{rejectWithValue, fulfillWithValue}) => { 
         try { 
-            const {data} = await api.get(`/payment/request`,{withCredentials: true})  
+            const {data} = await api.get(`/payment/request`,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -49,10 +45,9 @@ export const send_withdrowal_request = createAsyncThunk(
     'payment/confirm_payment_request',
     async(paymentId ,{rejectWithValue, fulfillWithValue}) => { 
         try { 
-            const {data} = await api.post(`/payment/request-confirm`,{paymentId},{withCredentials: true})  
+            const {data} = await api.post(`/payment/request-confirm`,{paymentId},{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }

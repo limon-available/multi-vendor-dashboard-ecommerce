@@ -11,9 +11,7 @@ import toast from "react-hot-toast";
 import moment from "moment";
 
 // scroll handler
-function handleOnWheel({ deltaY }) {
-  console.log("scroll:", deltaY);
-}
+function handleOnWheel({ deltaY }) {}
 
 const formatMoney = (num) =>
   new Intl.NumberFormat("en-BD", {

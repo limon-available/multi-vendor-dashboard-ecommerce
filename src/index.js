@@ -6,15 +6,21 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/index';
 import { Toaster } from 'react-hot-toast';
+import ErrorBoundary from './components/ErrorBoundary';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GOOGLE_CLIENT_ID } from './config/app';
 
 const App = lazy(() => import('./App'))
-
+console.log("GOOGLE_CLIENT_ID =", GOOGLE_CLIENT_ID);
+console.log("ENV =", process.env.REACT_APP_GOOGLE_CLIENT_ID);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <ErrorBoundary>
+  <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
   <BrowserRouter>
    <Provider store={store} >
     <Suspense>
-    <App /> 
+    <App />
     <Toaster
       toastOptions={{
         position : 'top-right',
@@ -22,11 +28,13 @@ root.render(
           background : '#283046',
           color : 'white'
         }
-      }} 
+      }}
     />
     </Suspense>
     </Provider>
   </BrowserRouter>
+  </GoogleOAuthProvider>
+  </ErrorBoundary>
 );
 
 // If you want to start measuring performance in your app, pass a function

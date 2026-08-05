@@ -3,14 +3,12 @@ import MainLayout from './../../layout/MainLayout';
 import ProtectRoute from './ProtectRoute';
 
 export const getRoutes = () => {
-
-    privateRoutes.forEach(r => {
-      r.element = <ProtectRoute route={r} >{r.element}</ProtectRoute>
-    })
-
     return {
         path : '/',
         element : <MainLayout />,
-        children : privateRoutes
+        children : privateRoutes.map((route) => ({
+            ...route,
+            element: <ProtectRoute route={route}>{route.element}</ProtectRoute>
+        }))
     }
 }

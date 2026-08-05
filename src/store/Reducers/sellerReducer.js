@@ -9,11 +9,9 @@ export const get_seller_request = createAsyncThunk(
         
         try {
              
-            const {data} = await api.get(`/request-seller-get?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true}) 
-             console.log(data)
+            const {data} = await api.get(`/request-seller-get?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -28,11 +26,9 @@ export const get_seller = createAsyncThunk(
         
         try {
              
-            const {data} = await api.get(`/get-seller/${sellerId}`,{withCredentials: true}) 
-             console.log(data)
+            const {data} = await api.get(`/get-seller/${sellerId}`,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -47,11 +43,9 @@ export const get_seller = createAsyncThunk(
         
         try {
              
-            const {data} = await api.post(`/seller-status-update`,info,{withCredentials: true}) 
-             console.log(data)
+            const {data} = await api.post(`/seller-status-update`,info,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -66,11 +60,10 @@ export const get_seller = createAsyncThunk(
         
         try {
              
-            const {data} = await api.get(`/get-sellers?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true}) 
-           
+            const {data} = await api.get(`/get-sellers?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true})
+
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -84,11 +77,10 @@ export const get_seller = createAsyncThunk(
         
         try {
              
-            const {data} = await api.get(`/get-deactive-sellers?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true}) 
-           
+            const {data} = await api.get(`/get-deactive-sellers?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true})
+
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -103,7 +95,7 @@ export const get_seller = createAsyncThunk(
             const {data: {url}} = await api.get(`/payment/create-stripe-connect-account`,{withCredentials: true}) 
             window.location.href = url
         } catch (error) {
-            // console.log(error.response.data) 
+            if (process.env.NODE_ENV !== 'production') console.error(error)
         }
     }
 )
@@ -114,10 +106,9 @@ export const get_seller = createAsyncThunk(
     'seller/active_stripe_connect_account',
     async(activeCode, {rejectWithValue, fulfillWithValue}) => { 
         try { 
-            const {data } = await api.put(`/payment/active-stripe-connect-account/${activeCode}`,{},{withCredentials: true}) 
+            const {data } = await api.put(`/payment/active-stripe-connect-account/${activeCode}`,{},{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data) 
             return rejectWithValue(error.response.data)
         }
     }

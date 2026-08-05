@@ -128,8 +128,7 @@ export const OrderReducer = createSlice({
             state.errorMessage = payload.message; 
         })
             .addCase(seller_order_status_update.fulfilled, (state, { payload }) => {
-            console.log("payload",payload)
-            state.successMessage = payload.message; 
+            state.successMessage = payload.message;
             state.myOrders = state.myOrders.map(order =>
     order._id === payload.order._id ? payload.order : order
 )

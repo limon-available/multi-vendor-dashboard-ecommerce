@@ -32,7 +32,7 @@ const AddProduct = () => {
     discount: "",
     price: "",
     brand: "",
-    stock: "",
+    stock: "50",
   });
 
   const inputHandle = (e) => {
@@ -75,8 +75,6 @@ const AddProduct = () => {
       setImageShow([...imageShow, ...imageUrl]);
     }
   };
-  // console.log(images)
-  // console.log(imageShow)
 
   useEffect(() => {
     if (successMessage) {
@@ -88,7 +86,7 @@ const AddProduct = () => {
         discount: "",
         price: "",
         brand: "",
-        stock: "",
+        stock: "50",
       });
       setImageShow([]);
       setImages([]);
@@ -135,7 +133,6 @@ const AddProduct = () => {
     for (let i = 0; i < images.length; i++) {
       formData.append("images", images[i]);
     }
-    // console.log(state)
     dispatch(add_product(formData));
   };
 
@@ -145,7 +142,7 @@ const AddProduct = () => {
 
   return (
     <div className="px-2 lg:px-7 pt-5">
-      <div className="w-full p-4 bg-[#6a5fdf] rounded-md">
+      <div className="w-full p-5 bg-[#6a5fdf] rounded-xl shadow-soft">
         <div className="flex justify-between items-center pb-4">
           <h1 className="text-[#d0d2d6] text-xl font-semibold">Add Product</h1>
           <Link
@@ -161,7 +158,7 @@ const AddProduct = () => {
               <div className="flex flex-col w-full gap-1">
                 <label htmlFor="name">Product Name</label>
                 <input
-                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                   onChange={inputHandle}
                   value={state.name}
                   type="text"
@@ -174,7 +171,7 @@ const AddProduct = () => {
               <div className="flex flex-col w-full gap-1">
                 <label htmlFor="brand">Product Brand</label>
                 <input
-                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                   onChange={inputHandle}
                   value={state.brand}
                   type="text"
@@ -191,7 +188,7 @@ const AddProduct = () => {
                 <input
                   readOnly
                   onClick={() => setCateShow(!cateShow)}
-                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                   onChange={inputHandle}
                   value={category}
                   type="text"
@@ -215,6 +212,7 @@ const AddProduct = () => {
                   <div className="flex justify-start items-start flex-col h-[200px] overflow-x-scrool">
                     {allCategory.map((c, i) => (
                       <span
+                        key={c._id || c.name || i}
                         className={`px-4 py-2 hover:bg-indigo-500 hover:text-white hover:shadow-lg w-full cursor-pointer ${category === c.name && "bg-indigo-500"}`}
                         onClick={() => {
                           setCateShow(false);
@@ -233,7 +231,7 @@ const AddProduct = () => {
               <div className="flex flex-col w-full gap-1">
                 <label htmlFor="stock">Product Stock</label>
                 <input
-                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                   onChange={inputHandle}
                   value={state.stock}
                   type="text"
@@ -248,7 +246,7 @@ const AddProduct = () => {
               <div className="flex flex-col w-full gap-1">
                 <label htmlFor="price">Price</label>
                 <input
-                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                   onChange={inputHandle}
                   value={state.price}
                   type="number"
@@ -261,7 +259,7 @@ const AddProduct = () => {
               <div className="flex flex-col w-full gap-1">
                 <label htmlFor="discount">Discount</label>
                 <input
-                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                  className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                   onChange={inputHandle}
                   value={state.discount}
                   type="number"
@@ -277,7 +275,7 @@ const AddProduct = () => {
                 Description
               </label>
               <textarea
-                className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                 onChange={inputHandle}
                 value={state.description}
                 name="description"
@@ -290,7 +288,7 @@ const AddProduct = () => {
 
             <div className="grid lg:grid-cols-4 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 sm:gap-4 md:gap-4 gap-3 w-full text-[#d0d2d6] mb-4">
               {imageShow.map((img, i) => (
-                <div className="h-[180px] relative">
+                <div key={img.url || i} className="h-[180px] relative">
                   <label htmlFor={i}>
                     <img
                       className="w-full h-full rounded-sm"
@@ -334,7 +332,7 @@ const AddProduct = () => {
             <div className="flex">
               <button
                 disabled={loader ? true : false}
-                className="bg-red-500 w-[280px] hover:shadow-red-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
+                className="bg-red-500 w-[280px] hover:shadow-red-300/50 hover:shadow-lg text-white rounded-lg px-7 py-2.5 font-semibold transition-all mb-3"
               >
                 {loader ? (
                   <PropagateLoader color="#fff" cssOverride={overrideStyle} />

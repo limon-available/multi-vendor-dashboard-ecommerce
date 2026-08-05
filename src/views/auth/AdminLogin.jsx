@@ -27,7 +27,6 @@ const AdminLogin = () => {
   const submit = (e) => {
     e.preventDefault();
     dispatch(admin_login(state));
-    console.log("admin", state);
   };
 
   const overrideStyle = {
@@ -54,14 +53,14 @@ const AdminLogin = () => {
   }, [errorMessage]);
 
   return (
-    <div className="min-w-screen min-h-screen bg-[#cdcae9] flex justify-center items-center">
-      <div className="w-[350px] text-[#ffffff] p-2">
-        <div className="bg-[#6f68d1] p-4 rounded-md">
+    <div className="min-w-screen min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-800 flex justify-center items-center px-4">
+      <div className="w-[380px] text-[#ffffff] p-2 animate-fade-in-up">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/15 p-7 rounded-2xl shadow-soft">
           <div className="h-[70px] flex justify-center items-center">
             <div className="w-[180px] h-[50px]">
               <img
-                className="w-full h-full"
-                src="http://localhost:3000/images/logo.png"
+                className="w-full h-full object-contain"
+                src="/images/logo.png"
                 alt="image"
               />
             </div>
@@ -73,7 +72,7 @@ const AdminLogin = () => {
               <input
                 onChange={inputHandle}
                 value={state.email}
-                className="px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md"
+                className="px-3 py-2.5 outline-none border border-white/20 bg-white/10 rounded-lg text-white placeholder-white/50 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-400/30 transition-all"
                 type="email"
                 name="email"
                 placeholder="Email"
@@ -87,7 +86,7 @@ const AdminLogin = () => {
               <input
                 onChange={inputHandle}
                 value={state.password}
-                className="px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md"
+                className="px-3 py-2.5 outline-none border border-white/20 bg-white/10 rounded-lg text-white placeholder-white/50 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-400/30 transition-all"
                 type="password"
                 name="password"
                 placeholder="Password"
@@ -98,7 +97,7 @@ const AdminLogin = () => {
 
             <button
               disabled={loader ? true : false}
-              className="bg-slate-800 w-full hover:shadow-blue-300/ hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
+              className="bg-gradient-to-r from-indigo-600 to-indigo-500 w-full hover:shadow-indigo-500/40 hover:shadow-lg font-semibold text-white rounded-lg px-7 py-2.5 mb-3 transition-all"
             >
               {loader ? (
                 <PropagateLoader color="#fff" cssOverride={overrideStyle} />

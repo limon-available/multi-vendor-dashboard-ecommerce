@@ -9,11 +9,9 @@ export const categoryAdd = createAsyncThunk(
             const { data } = await api.post('/category-add', formData, {
                 withCredentials: true,
               
-            }) 
-            // console.log(data)
+            })
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -27,11 +25,9 @@ export const get_category = createAsyncThunk(
         
         try {
              
-            const {data} = await api.get(`/category-get?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true}) 
-            // console.log(data)
+            const {data} = await api.get(`/category-get?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -42,18 +38,18 @@ export const get_category = createAsyncThunk(
   export const updateCategory = createAsyncThunk(
     'category/updateCategory',
     async({ id, name,image },{rejectWithValue, fulfillWithValue}) => {
-        
+            console.log("id:", id);
+    console.log("name:", name);
+    console.log("image:", image);
         try { 
             const formData = new FormData()
             formData.append('name', name)
             if (image) {
                 formData.append('image', image)
             } 
-            const {data} = await api.put(`/category-update/${id}`,formData,{withCredentials: true}) 
-            // console.log(data)
+            const {data} = await api.put(`/category-update/${id}`,formData,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -89,7 +85,8 @@ export const categoryReducer = createSlice({
     reducers : {
 
         messageClear : (state,_) => {
-            state.errorMessage = ""
+            state.errorMessage = "";
+                state.successMessage = "";
         }
 
     },
@@ -105,7 +102,7 @@ export const categoryReducer = createSlice({
         .addCase(categoryAdd.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.successMessage = payload.message
-            state.categorys = [...state.categorys, payload.category]
+             
              
         })
 

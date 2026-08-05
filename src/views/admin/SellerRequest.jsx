@@ -29,7 +29,7 @@ const SellerRequest = () => {
     <div className="px-2 lg:px-7 pt-5">
       <h1 className="text-[20px] font-bold mb-3"> Seller Request </h1>
 
-      <div className="w-full p-4 bg-[#6a5fdf] rounded-md">
+      <div className="w-full p-5 bg-[#6a5fdf] rounded-xl shadow-soft">
         <Search
           setParPage={setParPage}
           setSearchValue={setSearchValue}
@@ -103,7 +103,7 @@ const SellerRequest = () => {
                     <div className="flex justify-start items-center gap-4">
                       <Link
                         to={`/admin/dashboard/seller/details/${d._id}`}
-                        className="p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50"
+                        className="p-[6px] bg-green-500 rounded-lg text-white transition-all hover:shadow-lg hover:shadow-green-500/50"
                       >
                         {" "}
                         <FaEye />{" "}

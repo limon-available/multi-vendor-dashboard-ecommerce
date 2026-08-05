@@ -25,7 +25,6 @@ const SellerToCustomer = () => {
   const { customers, messages, currentCustomer, successMessage } = useSelector(
     (state) => state.chat,
   );
-  console.log("user info", userInfo);
   const sellerId = userInfo?._id || userInfo?.id;
   useEffect(() => {
     socket.on("activeCustomer", (customers) => {
@@ -38,7 +37,6 @@ const SellerToCustomer = () => {
   };
 
   const { customerId } = useParams();
-  console.log("customer id", customerId);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -65,7 +63,6 @@ const SellerToCustomer = () => {
       name: userInfo?.shopInfo?.shopName || userInfo?.name,
     };
 
-    console.log("📤 Sending payload =>", payload);
     dispatch(send_message(payload));
     setText("");
   };
@@ -103,7 +100,7 @@ const SellerToCustomer = () => {
 
   return (
     <div className="px-2 lg:px-7 py-5">
-      <div className="w-full bg-[#6a5fdf] px-4 py-4 rounded-md h-[calc(100vh-140px)]">
+      <div className="w-full bg-[#6a5fdf] px-4 py-4 rounded-xl shadow-soft h-[calc(100vh-140px)]">
         <div className="flex w-full h-full relative">
           {/* Sidebar (Customer List) */}
           <div
@@ -129,7 +126,7 @@ const SellerToCustomer = () => {
                   <div className="relative">
                     <img
                       className="w-[38px] h-[38px] border-white border-2 max-w-[38px] p-[2px] rounded-full"
-                      src="http://localhost:3001/images/admin.jpg"
+                      src="/images/admin.jpg"
                       alt=""
                     />
 
@@ -155,7 +152,7 @@ const SellerToCustomer = () => {
                   <div className="relative">
                     <img
                       className="w-[45px] h-[45px] border-green-500 border-2 max-w-[45px] p-[2px] rounded-full"
-                      src="http://localhost:3001/images/demo.jpg"
+                      src="/images/demo.jpg"
                       alt=""
                     />
                     <div
@@ -191,7 +188,7 @@ const SellerToCustomer = () => {
                         <div className="flex justify-start items-start gap-2 md:px-3 py-2 max-w-full lg:max-w-[85%]">
                           <img
                             className="w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]"
-                            src="http://localhost:3001/images/demo.jpg"
+                            src="/images/demo.jpg"
                             alt=""
                           />
                           <div className="flex justify-center items-start flex-col w-full bg-blue-500 shadow-lg shadow-blue-500/50 text-white py-1 px-2 rounded-sm">
@@ -211,7 +208,7 @@ const SellerToCustomer = () => {
                           </div>
                           <img
                             className="w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]"
-                            src="http://localhost:3001/images/admin.jpg"
+                            src="/images/admin.jpg"
                             alt=""
                           />
                         </div>

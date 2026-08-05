@@ -7,6 +7,7 @@ import { FaImage } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 import { PropagateLoader } from "react-spinners";
 import { overrideStyle } from "../../utils/utils";
+import Swal from "sweetalert2";
 import {
   categoryAdd,
   messageClear,
@@ -40,32 +41,31 @@ const Category = () => {
   const imageHandle = (e) => {
     let files = e.target.files;
     if (files.length > 0) {
-      setImageShow(URL.createObjectURL(files[0])); // preview এর জন্য
+      setImageShow(URL.createObjectURL(files[0]));
       setState({
         ...state,
-        image: files[0], // ফাইলটা state এ রাখো
+        image: files[0],
       });
     }
   };
 
   const addOrUpdateCategory = (e) => {
     e.preventDefault();
-    console.log("name:", state.name);
-    console.log("image:", state.image);
+
     if (isEdit) {
-      const formData = new FormData();
-      formData.append("name", state.name);
-
-      // যদি নতুন image select করা হয় তাহলে পাঠাও
-      if (state.image instanceof File) {
-        formData.append("image", state.image);
-      }
-
-      dispatch(updateCategory({ id: editId, formData }));
+      dispatch(
+        updateCategory({
+          id: editId,
+          name: state.name,
+          image: state.image,
+        }),
+      );
     } else {
       const formData = new FormData();
+
       formData.append("name", state.name);
       formData.append("image", state.image);
+
       dispatch(categoryAdd(formData));
     }
   };
@@ -95,7 +95,7 @@ const Category = () => {
       searchValue,
     };
     dispatch(get_category(obj));
-  }, [searchValue, currentPage, parPage]);
+  }, [searchValue, currentPage, parPage, successMessage]);
 
   /// Handle Edit Button
   const handleEdit = (category) => {
@@ -109,20 +109,29 @@ const Category = () => {
     setShow(true);
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure to delete category?")) {
-      console.log("delete category id", id);
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Delete Category?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
       dispatch(deleteCategory(id));
     }
   };
 
   return (
     <div className="px-2 lg:px-7 pt-5">
-      <div className="flex lg:hidden justify-between items-center mb-5 p-4 bg-[#6a5fdf] rounded-md">
+      <div className="flex lg:hidden justify-between items-center mb-5 p-5 bg-[#6a5fdf] rounded-xl shadow-soft">
         <h1 className="text-[#d0d2d6] font-semibold text-lg">Category</h1>
         <button
           onClick={() => setShow(true)}
-          className="bg-red-500 shadow-lg hover:shadow-red-500/40 px-4 py-2 cursor-pointer text-white rounded-sm text-sm"
+          className="bg-red-500 shadow-lg hover:shadow-red-500/40 px-4 py-2 cursor-pointer text-white rounded-lg text-sm font-medium transition-all"
         >
           Add
         </button>
@@ -130,7 +139,7 @@ const Category = () => {
 
       <div className="flex flex-wrap w-full">
         <div className="w-full lg:w-7/12">
-          <div className="w-full p-4 bg-[#6a5fdf] rounded-md">
+          <div className="w-full p-5 bg-[#6a5fdf] rounded-xl shadow-soft">
             <Search
               setParPage={setParPage}
               setSearchValue={setSearchValue}
@@ -158,7 +167,7 @@ const Category = () => {
 
                 <tbody>
                   {categorys.map((d, i) => (
-                    <tr key={i}>
+                    <tr key={d._id} className="border-b border-slate-600/40 hover:bg-white/5 transition-colors">
                       <td
                         scope="row"
                         className="py-1 px-4 font-medium whitespace-nowrap"
@@ -170,7 +179,7 @@ const Category = () => {
                         className="py-1 px-4 font-medium whitespace-nowrap"
                       >
                         <img
-                          className="w-[45px] h-[45px]"
+                          className="w-[45px] h-[45px] rounded-lg object-cover"
                           src={d.image}
                           alt=""
                         />
@@ -188,14 +197,14 @@ const Category = () => {
                       >
                         <div className="flex justify-start items-center gap-4">
                           <Link
-                            className="p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50"
+                            className="p-[6px] bg-yellow-500 rounded-lg text-white transition-all hover:shadow-lg hover:shadow-yellow-500/50"
                             onClick={() => handleEdit(d)}
                           >
                             {" "}
                             <FaEdit />{" "}
                           </Link>
                           <Link
-                            className="p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50"
+                            className="p-[6px] bg-red-500 rounded-lg text-white transition-all hover:shadow-lg hover:shadow-red-500/50"
                             onClick={() => handleDelete(d._id)}
                           >
                             {" "}
@@ -245,7 +254,7 @@ const Category = () => {
                     onChange={(e) =>
                       setState({ ...state, name: e.target.value })
                     }
-                    className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#ffffff] border border-slate-700 rounded-md text-[#000000]"
+                    className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#ffffff] border border-slate-300 rounded-lg text-[#000000]"
                     type="text"
                     id="name"
                     name="category_name"
@@ -255,7 +264,7 @@ const Category = () => {
 
                 <div>
                   <label
-                    className="flex justify-center items-center flex-col h-[238px] cursor-pointer border border-dashed hover:border-red-500 w-full border-[#d0d2d6]"
+                    className="flex justify-center items-center flex-col h-[238px] cursor-pointer border-2 border-dashed hover:border-indigo-300 w-full border-[#d0d2d6] rounded-lg transition-colors"
                     htmlFor="image"
                   >
                     {imageShow ? (
@@ -279,7 +288,7 @@ const Category = () => {
                   <div className="mt-4">
                     <button
                       disabled={loader ? true : false}
-                      className="bg-red-500 w-full hover:shadow-red-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
+                      className="bg-red-500 w-full hover:shadow-red-300/50 hover:shadow-lg text-white rounded-lg px-7 py-2.5 font-semibold transition-all mb-3"
                     >
                       {loader ? (
                         <PropagateLoader

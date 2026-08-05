@@ -65,8 +65,8 @@ const AddBanner = () => {
 
   return (
     <div className="px-2 lg:px-7 pt-5">
-      <h1 className="text-[#000000] font-semibold text-lg mb-3">Add Banner</h1>
-      <div className="w-full p-4 bg-[#6a5fdf] rounded-md">
+      <h1 className="text-slate-800 font-bold text-xl font-display mb-3">Add Banner</h1>
+      <div className="w-full p-5 bg-[#6a5fdf] rounded-xl shadow-soft">
         {!banner && (
           <div>
             <form onSubmit={add}>
@@ -97,7 +97,7 @@ const AddBanner = () => {
 
               <button
                 disabled={loader ? true : false}
-                className="bg-red-500 w-[280px] hover:shadow-red-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
+                className="bg-red-500 w-[280px] hover:shadow-red-300/50 hover:shadow-lg text-white rounded-lg px-7 py-2.5 font-semibold transition-all mb-3"
               >
                 {loader ? (
                   <PropagateLoader color="#fff" cssOverride={overrideStyle} />
@@ -145,7 +145,7 @@ const AddBanner = () => {
 
               <button
                 disabled={loader ? true : false}
-                className="bg-red-500 w-[280px] hover:shadow-red-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
+                className="bg-red-500 w-[280px] hover:shadow-red-300/50 hover:shadow-lg text-white rounded-lg px-7 py-2.5 font-semibold transition-all mb-3"
               >
                 {loader ? (
                   <PropagateLoader color="#fff" cssOverride={overrideStyle} />

@@ -29,11 +29,11 @@ const DiscountProducts = () => {
 
   return (
     <div className="px-2 lg:px-7 pt-5">
-      <h1 className="text-[#000000] font-semibold text-lg mb-3">
+      <h1 className="text-slate-800 font-bold text-xl font-display mb-3">
         Discount Products
       </h1>
 
-      <div className="w-full p-4 bg-[#6a5fdf] rounded-md">
+      <div className="w-full p-5 bg-[#6a5fdf] rounded-xl shadow-soft">
         <Search
           setParPage={setParPage}
           setSearchValue={setSearchValue}
@@ -59,12 +59,12 @@ const DiscountProducts = () => {
             <tbody>
               {discountProducts.length > 0 ? (
                 discountProducts.map((d, i) => (
-                  <tr key={i}>
+                  <tr key={i} className="border-b border-slate-600/40 hover:bg-white/5 transition-colors">
                     <td className="py-1 px-4">{i + 1}</td>
 
                     <td className="py-1 px-4">
                       <img
-                        className="w-[45px] h-[45px]"
+                        className="w-[45px] h-[45px] rounded-lg object-cover"
                         src={d.images[0]}
                         alt=""
                       />

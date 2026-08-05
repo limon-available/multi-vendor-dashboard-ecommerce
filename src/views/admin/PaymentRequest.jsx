@@ -9,9 +9,7 @@ import {
 import moment from "moment";
 import toast from "react-hot-toast";
 
-function handleOnWheel({ deltaY }) {
-  console.log("handleOnWheel", deltaY);
-}
+function handleOnWheel({ deltaY }) {}
 
 const outerElementType = forwardRef((props, ref) => (
   <div ref={ref} onWheel={handleOnWheel} {...props} />
@@ -68,7 +66,7 @@ const PaymentRequest = () => {
           <button
             disabled={loader}
             onClick={() => confirm_request(item._id)}
-            className="bg-indigo-500 shadow-lg hover:shadow-indigo-500/50 px-3 py-[2px] cursor-pointer text-white rounded-sm text-sm"
+            className="bg-indigo-500 shadow-lg hover:shadow-indigo-500/50 px-3 py-[2px] cursor-pointer text-white rounded-lg text-sm font-medium transition-all"
           >
             {loader && paymentId === item._id ? "loading.." : "Confirm"}
           </button>
@@ -79,7 +77,7 @@ const PaymentRequest = () => {
 
   return (
     <div className="px-2 lg:px-7 pt-5">
-      <div className="w-full p-4 bg-[#6a5fdf] rounded-md">
+      <div className="w-full p-5 bg-[#6a5fdf] rounded-xl shadow-soft">
         <h2 className="text-xl font-medium pb-5 text-[#d0d2d6]">
           Withdrawal Request
         </h2>

@@ -64,7 +64,7 @@ const SellerToAdmin = () => {
 
   return (
     <div className="px-2 lg:px-7 py-5">
-      <div className="w-full bg-[#6a5fdf] px-4 py-4 rounded-md h-[calc(100vh-140px)]">
+      <div className="w-full bg-[#6a5fdf] px-4 py-4 rounded-xl shadow-soft h-[calc(100vh-140px)]">
         <div className="flex w-full h-full relative">
           <div className="w-full md:pl-4">
             <div className="flex justify-between items-center">
@@ -72,7 +72,7 @@ const SellerToAdmin = () => {
                 <div className="relative">
                   <img
                     className="w-[45px] h-[45px] border-green-500 border-2 max-w-[45px] p-[2px] rounded-full"
-                    src="http://localhost:3001/images/demo.jpg"
+                    src="/images/demo.jpg"
                     alt=""
                   />
                   <div className="w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0"></div>
@@ -95,7 +95,7 @@ const SellerToAdmin = () => {
                           <div>
                             <img
                               className="w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]"
-                              src="http://localhost:3001/images/demo.jpg"
+                              src="/images/demo.jpg"
                               alt=""
                             />
                           </div>
@@ -119,7 +119,7 @@ const SellerToAdmin = () => {
                           <div>
                             <img
                               className="w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]"
-                              src="http://localhost:3001/images/admin.jpg"
+                              src="/images/admin.jpg"
                               alt=""
                             />
                           </div>

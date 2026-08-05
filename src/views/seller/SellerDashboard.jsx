@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { get_seller_dashboard_data } from "../../store/Reducers/dashboardReducer";
 import moment from "moment";
 import customer from "../../assets/demo.jpg";
+import StatusPill from "../components/StatusPill";
 import socket from "../../utils/socket";
 
 const SellerDashboard = () => {
@@ -24,7 +25,6 @@ const SellerDashboard = () => {
   useEffect(() => {
     if (userInfo?.id && userInfo.role === "seller") {
       const sellerId = userInfo.id;
-      console.log("🧩 Registering seller on socket:", userInfo);
 
       socket.emit("add_seller", sellerId, {
         id: sellerId,
@@ -34,7 +34,6 @@ const SellerDashboard = () => {
       });
 
       return () => {
-        console.log("❌ Disconnecting seller socket...");
         socket.off("add_seller");
       };
     }
@@ -44,19 +43,44 @@ const SellerDashboard = () => {
     dispatch(get_seller_dashboard_data());
   }, []);
 
+  const monthData = Array(12)
+    .fill(0)
+    .map(() => ({ orders: 0, revenue: 0, sales: 0 }));
+
+  recentOrder.forEach((order) => {
+    const orderDate = order.createdAt || order.date;
+    const monthIndex = orderDate ? moment(orderDate).month() : -1;
+
+    if (monthIndex >= 0 && monthIndex < 12) {
+      monthData[monthIndex].orders += 1;
+      monthData[monthIndex].revenue += Number(order.price) || 0;
+      monthData[monthIndex].sales +=
+        order.products?.reduce(
+          (total, product) => total + (Number(product.quantity) || 0),
+          0,
+        ) || 0;
+    }
+  });
+
+  if (!recentOrder.length) {
+    const currentMonth = moment().month();
+    monthData[currentMonth].orders = totalOrder;
+    monthData[currentMonth].revenue = Number(totalSale) || 0;
+  }
+
   const state = {
     series: [
       {
         name: "Orders",
-        data: [23, 34, 45, 56, 76, 34, 23, 76, 87, 78, 34, 45],
+        data: monthData.map((month) => month.orders),
       },
       {
         name: "Revenue",
-        data: [67, 39, 45, 56, 90, 56, 23, 56, 87, 78, 67, 78],
+        data: monthData.map((month) => month.revenue),
       },
       {
         name: "Sales",
-        data: [34, 39, 56, 56, 80, 67, 23, 56, 98, 78, 45, 56],
+        data: monthData.map((month) => month.sales),
       },
     ],
     options: {
@@ -135,54 +159,54 @@ const SellerDashboard = () => {
   return (
     <div className="px-2 md:px-7 py-5">
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-7">
-        <div className="flex justify-between items-center p-5 bg-[#fae8e8] rounded-md gap-3">
-          <div className="flex flex-col justify-start items-start text-[#5c5a5a]">
+        <div className="flex justify-between items-center p-5 bg-gradient-to-br from-rose-500 to-red-600 rounded-2xl gap-3 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
+          <div className="flex flex-col justify-start items-start text-white">
             <h2 className="text-3xl font-bold">${totalSale?.toFixed(2)}</h2>
             <span className="text-md font-medium">Total Sales</span>
           </div>
 
-          <div className="w-[40px] h-[47px] rounded-full bg-[#fa0305] flex justify-center items-center text-xl">
-            <MdCurrencyExchange className="text-[#fae8e8] shadow-lg" />
+          <div className="w-[48px] h-[48px] shadow-md rounded-full bg-white/25 flex justify-center items-center text-xl">
+            <MdCurrencyExchange className="text-white shadow-lg" />
           </div>
         </div>
 
-        <div className="flex justify-between items-center p-5 bg-[#fde2ff] rounded-md gap-3">
-          <div className="flex flex-col justify-start items-start text-[#5c5a5a]">
+        <div className="flex justify-between items-center p-5 bg-gradient-to-br from-fuchsia-500 to-purple-600 rounded-2xl gap-3 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
+          <div className="flex flex-col justify-start items-start text-white">
             <h2 className="text-3xl font-bold">{totalProduct}</h2>
             <span className="text-md font-medium">Products</span>
           </div>
 
-          <div className="w-[40px] h-[47px] rounded-full bg-[#760077] flex justify-center items-center text-xl">
-            <MdProductionQuantityLimits className="text-[#fae8e8] shadow-lg" />
+          <div className="w-[48px] h-[48px] shadow-md rounded-full bg-white/25 flex justify-center items-center text-xl">
+            <MdProductionQuantityLimits className="text-white shadow-lg" />
           </div>
         </div>
 
-        <div className="flex justify-between items-center p-5 bg-[#e9feea] rounded-md gap-3">
-          <div className="flex flex-col justify-start items-start text-[#5c5a5a]">
+        <div className="flex justify-between items-center p-5 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl gap-3 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
+          <div className="flex flex-col justify-start items-start text-white">
             <h2 className="text-3xl font-bold">{totalOrder}</h2>
             <span className="text-md font-medium">Orders</span>
           </div>
 
-          <div className="w-[40px] h-[47px] rounded-full bg-[#038000] flex justify-center items-center text-xl">
-            <FaCartShopping className="text-[#fae8e8] shadow-lg" />
+          <div className="w-[48px] h-[48px] shadow-md rounded-full bg-white/25 flex justify-center items-center text-xl">
+            <FaCartShopping className="text-white shadow-lg" />
           </div>
         </div>
 
-        <div className="flex justify-between items-center p-5 bg-[#ecebff] rounded-md gap-3">
-          <div className="flex flex-col justify-start items-start text-[#5c5a5a]">
+        <div className="flex justify-between items-center p-5 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl gap-3 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
+          <div className="flex flex-col justify-start items-start text-white">
             <h2 className="text-3xl font-bold">{totalPendingOrder}</h2>
             <span className="text-md font-medium">Pending Orders</span>
           </div>
 
-          <div className="w-[40px] h-[47px] rounded-full bg-[#0200f8] flex justify-center items-center text-xl">
-            <FaCartShopping className="text-[#fae8e8] shadow-lg" />
+          <div className="w-[48px] h-[48px] shadow-md rounded-full bg-white/25 flex justify-center items-center text-xl">
+            <FaCartShopping className="text-white shadow-lg" />
           </div>
         </div>
       </div>
 
       <div className="w-full flex flex-wrap mt-7">
         <div className="w-full lg:w-7/12 lg:pr-3">
-          <div className="w-full bg-[#6a5fdf] p-4 rounded-md">
+          <div className="w-full bg-[#6a5fdf] p-5 rounded-xl shadow-soft">
             <Chart
               options={state.options}
               series={state.series}
@@ -193,7 +217,7 @@ const SellerDashboard = () => {
         </div>
 
         <div className="w-full lg:w-5/12 lg:pl-4 mt-6 lg:mt-0">
-          <div className="w-full bg-[#6a5fdf] p-4 rounded-md text-[#d0d2d6]">
+          <div className="w-full bg-[#6a5fdf] p-5 rounded-xl shadow-soft text-[#d0d2d6]">
             <div className="flex justify-between items-center">
               <h2 className="font-semibold text-lg text-[#d0d2d6] pb-3">
                 Recent Customer Message
@@ -244,7 +268,7 @@ const SellerDashboard = () => {
         </div>
       </div>
 
-      <div className="w-full p-4 bg-[#6a5fdf] rounded-md mt-6">
+      <div className="w-full p-5 bg-[#6a5fdf] rounded-xl shadow-soft mt-6">
         <div className="flex justify-between items-center">
           <h2 className="font-semibold text-lg text-[#d0d2d6] pb-3 ">
             Recent Orders
@@ -276,7 +300,7 @@ const SellerDashboard = () => {
 
             <tbody>
               {recentOrder.map((d, i) => (
-                <tr key={i}>
+                <tr key={i} className="border-b border-slate-600/40 hover:bg-white/5 transition-colors">
                   <td
                     scope="row"
                     className="py-3 px-4 font-medium whitespace-nowrap"
@@ -293,19 +317,22 @@ const SellerDashboard = () => {
                     scope="row"
                     className="py-3 px-4 font-medium whitespace-nowrap"
                   >
-                    {d.payment_status}
+                    <StatusPill status={d.payment_status} />
                   </td>
                   <td
                     scope="row"
                     className="py-3 px-4 font-medium whitespace-nowrap"
                   >
-                    {d.delivery_status}
+                    <StatusPill status={d.delivery_status} />
                   </td>
                   <td
                     scope="row"
                     className="py-3 px-4 font-medium whitespace-nowrap"
                   >
-                    <Link to={`/seller/dashboard/order/details/${d._id}`}>
+                    <Link
+                      to={`/seller/dashboard/order/details/${d._id}`}
+                      className="inline-flex items-center px-3 py-1.5 rounded-lg bg-white/10 text-white text-xs font-semibold hover:bg-white/20 transition-all"
+                    >
                       View
                     </Link>{" "}
                   </td>

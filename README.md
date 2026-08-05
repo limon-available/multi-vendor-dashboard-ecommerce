@@ -1,70 +1,154 @@
-# Getting Started with Create React App
+# Admin and Seller Dashboard - Multi-Vendor Ecommerce
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React dashboard application for platform admins and sellers.
 
-## Available Scripts
+This app handles admin operations, seller onboarding, seller product management, seller orders, payment withdrawals, Stripe Connect onboarding, dashboards, and real-time admin/seller/customer chat.
 
-In the project directory, you can run:
+## Tech Stack
 
-### `npm start`
+- React
+- Redux Toolkit
+- React Router
+- Tailwind CSS
+- Axios
+- Socket.IO Client
+- ApexCharts
+- Stripe Connect flow through backend APIs
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Main Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Admin login
+- Seller registration and login
+- Seller approval, activation, and deactivation
+- Admin dashboard analytics
+- Seller dashboard analytics
+- Category management
+- Product management
+- Product banner management
+- Admin order management
+- Seller order management
+- Seller withdrawal requests
+- Admin withdrawal approval
+- Stripe Connect seller onboarding
+- Admin-to-seller support chat
+- Seller-to-customer chat
 
-### `npm test`
+## Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js 20+
+- npm
+- Running backend API
+- Backend configured with Stripe, Cloudinary, MongoDB, and JWT secret
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Environment Variables
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Create a `.env` file in this directory:
 
-### `npm run eject`
+```env
+REACT_APP_API_URL=http://localhost:5000
+REACT_APP_SOCKET_URL=http://localhost:5000
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+For production, use deployed HTTPS URLs:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```env
+REACT_APP_API_URL=https://your-backend-domain.com
+REACT_APP_SOCKET_URL=https://your-backend-domain.com
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Development
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm start
+```
 
-## Learn More
+Default local URL:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```text
+http://localhost:3001
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Production Build
 
-### Code Splitting
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The optimized static output is generated in:
 
-### Analyzing the Bundle Size
+```text
+build/
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## API Configuration
 
-### Making a Progressive Web App
+API and socket configuration is centralized in:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```text
+src/config/app.js
+src/api/api.js
+src/utils/socket.js
+src/utils/utils.js
+```
 
-### Advanced Configuration
+Avoid hardcoding backend URLs in views or reducers. Use the shared config and Axios instance.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Important Routes
 
-### Deployment
+Admin:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- `/admin/login` - Admin login
+- `/admin/dashboard` - Admin dashboard
+- `/admin/dashboard/category` - Category management
+- `/admin/dashboard/sellers-request` - Pending seller requests
+- `/admin/dashboard/sellers` - Active sellers
+- `/admin/dashboard/deactive-sellers` - Deactivated sellers
+- `/admin/dashboard/orders` - Orders
+- `/admin/dashboard/payment-request` - Withdrawal requests
+- `/admin/dashboard/chat-sellers` - Seller support chat
 
-### `npm run build` fails to minify
+Seller:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `/login` - Seller login
+- `/register` - Seller registration
+- `/seller/dashboard` - Seller dashboard
+- `/seller/dashboard/add-product` - Add product
+- `/seller/dashboard/products` - Product list
+- `/seller/dashboard/orders` - Seller orders
+- `/seller/dashboard/payments` - Seller payments
+- `/seller/dashboard/profile` - Seller profile
+- `/seller/dashboard/chat-support` - Admin support chat
+- `/seller/dashboard/chat-customer` - Customer chat
+
+## Backend Requirements
+
+The backend must include this dashboard URL in `CLIENT_ORIGINS`.
+
+For Stripe Connect, set backend `DASHBOARD_URL` to this app's deployed URL:
+
+```env
+DASHBOARD_URL=https://your-dashboard-domain.com
+```
+
+## Deployment Notes
+
+- Deploy as a static React build on Vercel, Netlify, or similar hosting.
+- Set all `REACT_APP_*` variables in the hosting provider.
+- Ensure backend CORS allows the deployed dashboard URL.
+- Ensure backend cookies are configured for HTTPS in production.
+- Restrict admin bootstrap after creating the first admin.
+
+## Verification
+
+```bash
+npm run build
+```
+
+The current build passes, but the app still has existing ESLint warnings that should be cleaned before enforcing CI lint checks.
+

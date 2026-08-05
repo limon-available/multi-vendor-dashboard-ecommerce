@@ -25,7 +25,6 @@ const Profile = () => {
   const { userInfo, loader, successMessage } = useSelector(
     (state) => state.auth,
   );
-  console.log("userInfo:", userInfo);
   useEffect(() => {
     if (successMessage) {
       toast.success(successMessage);
@@ -57,7 +56,7 @@ const Profile = () => {
     <div className="px-2 lg:px-7 py-5">
       <div className="w-full flex flex-wrap">
         <div className="w-full md:w-6/12">
-          <div className="w-full p-4 bg-[#6a5fdf] rounded-md text-[#d0d2d6]">
+          <div className="w-full p-5 bg-[#6a5fdf] rounded-xl shadow-soft text-[#d0d2d6]">
             <div className="flex justify-center items-center py-3">
               {userInfo?.image ? (
                 <label
@@ -101,7 +100,7 @@ const Profile = () => {
 
             <div className="px-0 md:px-5 py-2">
               <div className="flex justify-between text-sm flex-col gap-2 p-4 bg-slate-800 rounded-md relative">
-                <span className="p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50 absolute right-2 top-2 cursor-pointer">
+                <span className="p-[6px] bg-yellow-500 rounded-lg text-white transition-all hover:shadow-lg hover:shadow-yellow-500/50 absolute right-2 top-2 cursor-pointer">
                   <FaRegEdit />{" "}
                 </span>
                 <div className="flex gap-2">
@@ -150,7 +149,7 @@ const Profile = () => {
                     <input
                       value={state.shopName}
                       onChange={inputHandle}
-                      className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                      className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                       type="text"
                       name="shopName"
                       id="Shop"
@@ -163,7 +162,7 @@ const Profile = () => {
                     <input
                       value={state.division}
                       onChange={inputHandle}
-                      className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                      className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                       type="text"
                       name="division"
                       id="division"
@@ -176,7 +175,7 @@ const Profile = () => {
                     <input
                       value={state.district}
                       onChange={inputHandle}
-                      className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                      className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                       type="text"
                       name="district"
                       id="district"
@@ -189,7 +188,7 @@ const Profile = () => {
                     <input
                       value={state.sub_district}
                       onChange={inputHandle}
-                      className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                      className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                       type="text"
                       name="sub_district"
                       id="sub"
@@ -199,7 +198,7 @@ const Profile = () => {
 
                   <button
                     disabled={loader ? true : false}
-                    className="bg-red-500 w-[200px] hover:shadow-red-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
+                    className="bg-red-500 w-[200px] hover:shadow-red-300/50 hover:shadow-lg text-white rounded-lg px-7 py-2.5 font-semibold transition-all mb-3"
                   >
                     {loader ? (
                       <PropagateLoader
@@ -213,7 +212,7 @@ const Profile = () => {
                 </form>
               ) : (
                 <div className="flex justify-between text-sm flex-col gap-2 p-4 bg-slate-800 rounded-md relative">
-                  <span className="p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50 absolute right-2 top-2 cursor-pointer">
+                  <span className="p-[6px] bg-yellow-500 rounded-lg text-white transition-all hover:shadow-lg hover:shadow-yellow-500/50 absolute right-2 top-2 cursor-pointer">
                     <FaRegEdit />{" "}
                   </span>
                   <div className="flex gap-2">
@@ -247,7 +246,7 @@ const Profile = () => {
                 <div className="flex flex-col w-full gap-1 mb-2">
                   <label htmlFor="email">Email</label>
                   <input
-                    className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                    className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                     type="email"
                     name="email"
                     id="email"
@@ -258,7 +257,7 @@ const Profile = () => {
                 <div className="flex flex-col w-full gap-1 mb-2">
                   <label htmlFor="o_password">Old Password</label>
                   <input
-                    className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                    className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                     type="password"
                     name="old_password"
                     id="o_password"
@@ -269,7 +268,7 @@ const Profile = () => {
                 <div className="flex flex-col w-full gap-1 mb-2">
                   <label htmlFor="n_password">New Password</label>
                   <input
-                    className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                    className="px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                     type="password"
                     name="new_password"
                     id="n_password"
@@ -277,7 +276,7 @@ const Profile = () => {
                   />
                 </div>
 
-                <button className="bg-red-500  hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2">
+                <button className="bg-red-500  hover:shadow-red-500/40 hover:shadow-md text-white rounded-lg px-7 py-2.5 font-semibold transition-all my-2">
                   Save Changes
                 </button>
               </form>

@@ -6,11 +6,9 @@ export const add_product = createAsyncThunk(
     async(product,{rejectWithValue, fulfillWithValue}) => {
         
         try { 
-            const {data} = await api.post('/product-add',product,{withCredentials: true}) 
-            // console.log(data)
+            const {data} = await api.post('/product-add',product,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -24,11 +22,9 @@ export const get_products = createAsyncThunk(
         
         try {
              
-            const {data} = await api.get(`/products-get?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true}) 
-            console.log("data",data)
+            const {data} = await api.get(`/products-get?page=${page}&&searchValue=${searchValue}&&parPage=${parPage}`,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -44,11 +40,9 @@ export const get_product = createAsyncThunk(
         
         try {
              
-            const {data} = await api.get(`/product-get/${productId}`,{withCredentials: true}) 
-            console.log(data)
+            const {data} = await api.get(`/product-get/${productId}`,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -64,11 +58,9 @@ export const update_product = createAsyncThunk(
         
         try {
              
-            const {data} = await api.post('/product-update', product,{withCredentials: true}) 
-            console.log(data)
+            const {data} = await api.post('/product-update', product,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -87,11 +79,9 @@ export const update_product = createAsyncThunk(
             formData.append('oldImage', oldImage)
             formData.append('newImage', newImage)
             formData.append('productId', productId)             
-            const {data} = await api.post('/product-image-update', formData,{withCredentials: true}) 
-            console.log(data)
+            const {data} = await api.post('/product-image-update', formData,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }

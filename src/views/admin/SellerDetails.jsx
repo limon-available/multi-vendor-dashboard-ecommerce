@@ -44,16 +44,12 @@ const SellerDetails = () => {
   return (
     <div className="px-2 lg:px-7 pt-5">
       <h1 className="text-[20px] font-bold mb-3"> Seller Details </h1>
-      <div className="w-full p-4 bg-[#6a5fdf] rounded-md">
+      <div className="w-full p-5 bg-[#6a5fdf] rounded-xl shadow-soft">
         <div className="w-full flex flex-wrap text-[#d0d2d6]">
           <div className="w-3/12 flex justify-center items-center py-3">
             <div>
               {seller?.image ? (
-                <img
-                  className="w-full h-[230px]"
-                  src="http://localhost:3000/images/demo.jpg"
-                  alt=""
-                />
+                <img className="w-full h-[230px]" src={seller.image} alt="" />
               ) : (
                 <span>Image Not Uploaded </span>
               )}
@@ -127,7 +123,7 @@ const SellerDetails = () => {
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]"
+                className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-600 rounded-lg text-[#d0d2d6]"
                 name=""
                 id=""
                 required
@@ -136,7 +132,7 @@ const SellerDetails = () => {
                 <option value="active">Active</option>
                 <option value="deactive">Deactive</option>
               </select>
-              <button className="bg-red-500 w-[170px] hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2">
+              <button className="bg-red-500 w-[170px] hover:shadow-red-500/40 hover:shadow-md text-white rounded-lg px-7 py-2.5 font-semibold transition-all">
                 Submit
               </button>
             </div>

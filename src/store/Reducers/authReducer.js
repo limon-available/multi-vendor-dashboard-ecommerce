@@ -3,13 +3,10 @@ import api from "../../api/api";
 export const admin_login = createAsyncThunk(
     'auth/admin_login',
     async(info,{rejectWithValue, fulfillWithValue}) => {
-         console.log(info)
         try {
             const {data} = await api.post('/admin-login',info,{withCredentials: true})
-             console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-             console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -19,13 +16,38 @@ export const admin_login = createAsyncThunk(
 export const seller_login = createAsyncThunk(
     'auth/seller_login',
     async(info,{rejectWithValue, fulfillWithValue}) => {
-         console.log(info)
         try {
             const {data} = await api.post('/seller-login',info,{withCredentials: true})
-            console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
+            return rejectWithValue(
+                error.response?.data || {error:"server not responding"}
+            )
+        }
+    }
+)
+
+export const seller_google_login = createAsyncThunk(
+    'auth/seller_google_login',
+    async(access_token,{rejectWithValue, fulfillWithValue}) => {
+        try {
+            const {data} = await api.post('/seller/google-login',{ access_token },{withCredentials: true})
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(
+                error.response?.data || {error:"server not responding"}
+            )
+        }
+    }
+)
+
+export const seller_facebook_login = createAsyncThunk(
+    'auth/seller_facebook_login',
+    async(access_token,{rejectWithValue, fulfillWithValue}) => {
+        try {
+            const {data} = await api.post('/seller/facebook-login',{ access_token },{withCredentials: true})
+            return fulfillWithValue(data)
+        } catch (error) {
             return rejectWithValue(
                 error.response?.data || {error:"server not responding"}
             )
@@ -39,10 +61,8 @@ export const get_user_info = createAsyncThunk(
           
         try {
             const {data} = await api.get('/get_user_info',{withCredentials: true})
-             console.log(data)            
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -55,10 +75,8 @@ export const profile_image_upload = createAsyncThunk(
           
         try {
             const {data} = await api.post('/profile-image-upload',image,{withCredentials: true})
-            console.log(data)            
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -68,12 +86,9 @@ export const seller_register = createAsyncThunk(
     'auth/seller_register',
     async(info,{rejectWithValue, fulfillWithValue}) => { 
         try {
-            console.log(info)
             const {data} = await api.post('/seller-register',info,{withCredentials: true})
-            //  console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -85,10 +100,9 @@ export const profile_info_add = createAsyncThunk(
     'auth/profile_info_add',
     async(info,{rejectWithValue, fulfillWithValue}) => { 
         try { 
-            const {data} = await api.post('/profile-info-add',info,{withCredentials: true}) 
+            const {data} = await api.post('/profile-info-add',info,{withCredentials: true})
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -144,7 +158,6 @@ const returnRole = () => {
                 
                 return fulfillWithValue(data)
             } catch (error) {
-                // console.log(error.response.data)
                 return rejectWithValue(error.response.data)
             }
         }
@@ -202,6 +215,34 @@ export const authReducer = createSlice({
             state.userInfo=payload.userInfo
         })
 
+        .addCase(seller_google_login.pending, (state) => {
+            state.loader = true;
+        })
+        .addCase(seller_google_login.rejected, (state, { payload }) => {
+            state.loader = false;
+            state.errorMessage = payload?.error || "Google sign-in failed";
+        })
+        .addCase(seller_google_login.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.successMessage = payload.message
+            state.role = payload.userInfo.role
+            state.userInfo = payload.userInfo
+        })
+
+        .addCase(seller_facebook_login.pending, (state) => {
+            state.loader = true;
+        })
+        .addCase(seller_facebook_login.rejected, (state, { payload }) => {
+            state.loader = false;
+            state.errorMessage = payload?.error || "Facebook sign-in failed";
+        })
+        .addCase(seller_facebook_login.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.successMessage = payload.message
+            state.role = payload.userInfo.role
+            state.userInfo = payload.userInfo
+        })
+
         .addCase(seller_register.pending, (state, { payload }) => {
             state.loader = true;
         })
@@ -234,7 +275,6 @@ export const authReducer = createSlice({
         .addCase(profile_image_upload.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.userInfo = payload.userInfo
-            console.log("userInfo",payload.userInfo)
             state.successMessage = payload.message
         })
 

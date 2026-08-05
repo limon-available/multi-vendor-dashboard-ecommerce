@@ -3,6 +3,7 @@ import Search from "../components/Search";
 import { Link } from "react-router-dom";
 import Pagination from "../Pagination";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import StatusPill from "../components/StatusPill";
 import { useDispatch, useSelector } from "react-redux";
 import { get_seller_orders } from "../../store/Reducers/OrderReducer";
 
@@ -28,9 +29,9 @@ const Orders = () => {
 
   return (
     <div className="px-2 lg:px-7 pt-5">
-      <h1 className="text-[#000000] font-semibold text-lg mb-3">Orders</h1>
+      <h1 className="text-slate-800 font-bold text-xl font-display mb-3">Orders</h1>
 
-      <div className="w-full p-4 bg-[#6a5fdf] rounded-md">
+      <div className="w-full p-5 bg-[#6a5fdf] rounded-xl shadow-soft">
         <Search
           setParPage={setParPage}
           setSearchValue={setSearchValue}
@@ -64,7 +65,7 @@ const Orders = () => {
 
             <tbody>
               {myOrders.map((d, i) => (
-                <tr key={i}>
+                <tr key={i} className="border-b border-slate-600/40 hover:bg-white/5 transition-colors">
                   <td
                     scope="row"
                     className="py-1 px-4 font-medium whitespace-nowrap"
@@ -79,15 +80,15 @@ const Orders = () => {
                   </td>
                   <td
                     scope="row"
-                    className="py-1 px-4 font-medium whitespace-nowrap"
+                    className="py-2 px-4 font-medium whitespace-nowrap"
                   >
-                    {d.payment_status}{" "}
+                    <StatusPill status={d.payment_status} />
                   </td>
                   <td
                     scope="row"
-                    className="py-1 px-4 font-medium whitespace-nowrap"
+                    className="py-2 px-4 font-medium whitespace-nowrap"
                   >
-                    {d.delivery_status}
+                    <StatusPill status={d.delivery_status} />
                   </td>
                   <td
                     scope="row"
@@ -102,7 +103,7 @@ const Orders = () => {
                     <div className="flex justify-start items-center gap-4">
                       <Link
                         to={`/seller/dashboard/order/details/${d._id}`}
-                        className="p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50"
+                        className="p-[6px] bg-green-500 rounded-lg text-white transition-all hover:shadow-lg hover:shadow-green-500/50"
                       >
                         {" "}
                         <FaEye />{" "}

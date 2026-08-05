@@ -1,6 +1,8 @@
 import axios from "axios"
+import { API_BASE_URL } from "../config/app"
+
 const api = axios.create({
-    baseURL: 'https://multi-vendor-eccomerce-backend-1.onrender.com/api',
+    baseURL: API_BASE_URL,
     withCredentials:true
 })
 export default api

@@ -1,25 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Router from "./router/Router";
 import publicRoutes from "./router/routes/publicRoutes";
 import { getRoutes } from "./router/routes";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { get_user_info } from "./store/Reducers/authReducer";
 
 function App() {
   const dispatch = useDispatch();
-  const { sellerToken, adminToken } = useSelector((state) => state.auth);
-
-  const [allRoutes, setAllRoutes] = useState([...publicRoutes]);
-  // console.log(allRoutes)
+  const [authChecked, setAuthChecked] = useState(false);
+  const allRoutes = useMemo(() => [...publicRoutes, getRoutes()], []);
 
   useEffect(() => {
-    const routes = getRoutes();
-    setAllRoutes([...allRoutes, routes]);
-  }, []);
+    let isMounted = true;
 
-  useEffect(() => {
-    dispatch(get_user_info());
+    dispatch(get_user_info()).finally(() => {
+      if (isMounted) {
+        setAuthChecked(true);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
   }, [dispatch]);
+
+  if (!authChecked) return null;
 
   return <Router allRoutes={allRoutes} />;
 }
