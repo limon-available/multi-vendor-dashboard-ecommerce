@@ -25,6 +25,7 @@ const Profile = () => {
   const { userInfo, loader, successMessage } = useSelector(
     (state) => state.auth,
   );
+  console.log("userInfo", userInfo);
   useEffect(() => {
     if (successMessage) {
       toast.success(successMessage);

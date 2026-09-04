@@ -72,7 +72,10 @@ const Products = () => {
 
             <tbody>
               {products.map((d, i) => (
-                <tr key={i} className="border-b border-slate-600/40 hover:bg-white/5 transition-colors">
+                <tr
+                  key={i}
+                  className="border-b border-slate-600/40 hover:bg-white/5 transition-colors"
+                >
                   <td
                     scope="row"
                     className="py-1 px-4 font-medium whitespace-nowrap"
@@ -175,9 +178,9 @@ const Products = () => {
             <Pagination
               pageNumber={currentPage}
               setPageNumber={setCurrentPage}
-              totalItem={50}
+              totalItem={totalProduct}
               parPage={parPage}
-              showItem={3}
+              showItem={5}
             />
           </div>
         )}

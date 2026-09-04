@@ -1,6 +1,22 @@
 {
   "rewrites": [
     {
+      "source": "/admin/static/(.*)",
+      "destination": "/static/$1"
+    },
+    {
+      "source": "/admin/manifest.json",
+      "destination": "/manifest.json"
+    },
+    {
+      "source": "/admin/favicon.ico",
+      "destination": "/favicon.ico"
+    },
+    {
+      "source": "/admin/images/(.*)",
+      "destination": "/images/$1"
+    },
+    {
       "source": "/admin/(.*)",
       "destination": "/index.html"
     }
