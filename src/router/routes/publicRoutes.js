@@ -1,4 +1,6 @@
- import { lazy } from "react";    
+import { lazy } from "react";    
+import { Navigate } from "react-router-dom";
+import getLoginPath from "../../utils/getLoginPath";
 const Login = lazy(()=> import('../../views/auth/Login'))   
 const Register = lazy(()=> import('../../views/auth/Register')) 
 const AdminLogin = lazy(()=> import('../../views/auth/AdminLogin')) 
@@ -9,7 +11,9 @@ const Success = lazy(()=> import('../../views/Success'))
 const publicRoutes = [
     {
         path: '/',
-        element : <Home/>, 
+        element : getLoginPath() === "/admin/login"
+            ? <Navigate to="/admin/login" replace />
+            : <Home/>, 
     },
     {
         path : '/login',

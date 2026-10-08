@@ -1,9 +1,10 @@
 import React, { Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import getLoginPath from '../../utils/getLoginPath';
 
 const ProtectRoute = ({ route, children }) => {
-  const { role, userInfo, loader } = useSelector(state => state.auth);
+  const { userInfo, loader } = useSelector(state => state.auth);
 
 
   if (loader) {
@@ -12,7 +13,7 @@ const ProtectRoute = ({ route, children }) => {
 
 
   if (!userInfo) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={getLoginPath()} replace />;
   }
 
  
