@@ -261,7 +261,7 @@ export const authReducer = createSlice({
         .addCase(get_user_info.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.userInfo = payload?.userInfo;
-            state.role=payload?.userInfo.role
+            state.role=payload?.userInfo?.role
         })
          .addCase(get_user_info.rejected, (state) => {
              state.userInfo = null;
