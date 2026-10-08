@@ -14,6 +14,7 @@ import {
 import toast from "react-hot-toast";
 import { useGoogleLogin } from "@react-oauth/google";
 import { facebookLogin } from "../../utils/facebookAuth";
+import getLoginPath from "../../utils/getLoginPath";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -149,7 +150,7 @@ const Register = () => {
             <div className="flex items-center mb-3 gap-3 justify-center">
               <p>
                 Already Have an account ?{" "}
-                <Link className="font-bold" to="/login">
+                <Link className="font-bold" to={getLoginPath()}>
                   Sing In
                 </Link>{" "}
               </p>

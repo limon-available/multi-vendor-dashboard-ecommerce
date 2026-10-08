@@ -11,12 +11,16 @@ const Success = lazy(()=> import('../../views/Success'))
 const publicRoutes = [
     {
         path: '/',
-        element : getLoginPath() === "/admin/login"
-            ? <Navigate to="/admin/login" replace />
+        element : getLoginPath() !== "/login"
+            ? <Navigate to={getLoginPath()} replace />
             : <Home/>, 
     },
     {
         path : '/login',
+        element : <Login/>
+    },
+    {
+        path : '/seller/login',
         element : <Login/>
     },
     {

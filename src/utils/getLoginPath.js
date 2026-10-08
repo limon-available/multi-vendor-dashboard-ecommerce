@@ -3,6 +3,10 @@ const getLoginPath = () => {
     return "/admin/login";
   }
 
+  if (window.location.hostname === "seller.limontechno.com") {
+    return "/seller/login";
+  }
+
   return "/login";
 };
 
