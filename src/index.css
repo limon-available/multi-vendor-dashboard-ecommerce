@@ -67,3 +67,34 @@
 *::-webkit-scrollbar-thumb:hover {
   background-color: #a5b4fc;
 }
+
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+}
+
+html {
+  overflow-x: clip;
+}
+
+.admin-canvas {
+  overflow-x: clip;
+}
+
+.admin-canvas .apexcharts-canvas,
+.admin-canvas .apexcharts-svg {
+  max-width: 100% !important;
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 15px;
+  }
+
+  .admin-canvas .apexcharts-canvas {
+    margin-inline: auto;
+  }
+}

@@ -59,7 +59,7 @@ const Sidebar = ({showSidebar, setShowSidebar}) => {
                         const active = pathname === n.path
                         return (
                             <li key={i}>
-                            <Link to={n.path} className={`group relative ${active ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 shadow-md shadow-indigo-500/30 text-white' : 'text-slate-600 font-semibold hover:bg-indigo-50 hover:text-indigo-600' } px-[14px] py-[11px] rounded-xl flex justify-start items-center gap-[12px] transition-all duration-200 w-full mb-1.5`} >
+                            <Link to={n.path} onClick={() => setShowSidebar(false)} className={`group relative ${active ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 shadow-md shadow-indigo-500/30 text-white' : 'text-slate-600 font-semibold hover:bg-indigo-50 hover:text-indigo-600' } px-[14px] py-[11px] rounded-xl flex justify-start items-center gap-[12px] transition-all duration-200 w-full mb-1.5`} >
                                 <span className={`absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[3px] rounded-r-full bg-white transition-all ${active ? 'opacity-100' : 'opacity-0'}`}></span>
                                 <span className='text-lg'>{n.icon}</span>
                                 <span className='text-sm'>{n.title}</span>

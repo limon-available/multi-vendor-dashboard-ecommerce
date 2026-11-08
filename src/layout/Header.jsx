@@ -18,7 +18,7 @@ const Header = ({ showSidebar, setShowSidebar }) => {
 
   if (!userInfo) return null;
   return (
-    <div className="fixed top-0 left-0 w-full py-5 px-2 lg:px-7 z-40">
+    <div className="fixed top-0 left-0 w-full py-3 lg:py-5 px-2 lg:px-7 z-40">
       <div className="ml-0 lg:ml-[260px] rounded-2xl h-[68px] flex justify-between items-center bg-white/90 backdrop-blur shadow-card border border-slate-100 px-4 lg:px-5 transition-all">
         {/* Left: menu + page title */}
         <div className="flex items-center gap-3">
